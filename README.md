@@ -26,6 +26,10 @@ Ouvre [http://localhost:5173](http://localhost:5173)
 | `npm run dev` | Serveur de développement |
 | `npm run build` | Build de production |
 | `npm run preview` | Prévisualiser le build |
+| `npm run test:unit` | Tests unitaires (Vitest) |
+| `npm run test:coverage` | Tests + couverture |
+| `npm run test:security` | Tests sécurité/a11y ciblés |
+| `npm run test:e2e` | Tests E2E Playwright |
 
 ## Structure
 
@@ -83,6 +87,24 @@ Pour un repo `username.github.io` ou Pages sur un repo :
 
 - Remplacer `https://ton-site.com` dans `public/sitemap.xml` par ton URL réelle
 - Ajouter une image `public/og-image.png` (1200×630) pour le partage social
+
+## Sécurité
+
+- Headers de sécurité définis dans `public/_headers` (CSP, HSTS, XFO, nosniff, etc.).
+- Headers renforcés : `form-action`, `COOP`, `CORP`, `connect-src` Formspree explicite.
+- Scans CI dédiés : `security.yml` (CodeQL, gitleaks, audit npm runtime).
+- Durcissement liens externes : `target="_blank"` protégé par `rel="noopener noreferrer"`.
+- Validation formulaire renforcée (longueurs minimales/maximales + pattern nom).
+
+> Note: selon la plateforme d'hébergement, les headers de `public/_headers` peuvent nécessiter une configuration équivalente côté provider.
+
+## Tests
+
+- **Unitaires/Intégration** : Vitest + Testing Library.
+- **Accessibilité** : jest-axe.
+- **Sécurité DOM** : vérifications automatisées (liens externes, usage HTML dangereux).
+- **E2E** : Playwright (navigation sections, filtres projets, modale, menu mobile).
+- **E2E contact** : soumission formulaire avec mock Formspree.
 
 ## Documentation
 
